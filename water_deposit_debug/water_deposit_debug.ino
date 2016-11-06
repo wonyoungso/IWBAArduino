@@ -1,5 +1,6 @@
 #include <Bridge.h>
 #include <HttpClient.h>
+#include <Console.h>
 
 /*
 Liquid flow rate sensor -DIYhacking.com Arvind Sanjeev
@@ -39,8 +40,7 @@ void setup()
   
   pinMode(sensorPin, INPUT);
   Bridge.begin();
-  Serial.begin(38400);
-  while(!Serial);
+  Console.begin();
   digitalWrite(sensorPin, HIGH);
 
   pulseCount        = 0;
@@ -95,6 +95,8 @@ void loop()
     if (flowMilliLitres > 0) {
       client.get("http://iwba.herokuapp.com/api/drops/water.json?amount=" + String(flowMilliLitres));
     }
+
+    Console.println(flowMilliLitres);
 //    
     // Print the flow rate for this second in litres / minute
 //    Serial.print("Flow rate: ");
@@ -105,9 +107,9 @@ void loop()
 //    Serial.print(frac, DEC) ;      // Print the fractional part of the variable
 //    Serial.print("L/min");
 ////    // Print the number of litres flowed in this second
-     Serial.print("  Current Liquid Flowing: ");             // Output separator
-     Serial.print(flowMilliLitres);
-     Serial.println("mL/Sec");
+//     Serial.print("  Current Liquid Flowing: ");             // Output separator
+//     Serial.print(flowMilliLitres);
+//     Serial.println("mL/Sec");
 //
 //    // Print the cumulative total of litres flowed since starting
 //    Serial.print("  Output Liquid Quantity: ");             // Output separator
